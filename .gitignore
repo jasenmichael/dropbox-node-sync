@@ -1,5 +1,4 @@
 node_modules
-dropbox-sync/.config/**
 dropbox-sync/.config/index.js
 images/**
 
