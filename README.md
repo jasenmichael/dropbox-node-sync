@@ -24,5 +24,5 @@ npm start
 
 ### todo:
 
- - [] add directory handling, as of now will error if a folder exists in the dldDir
- - [] add compare files for changes and update
+ - [ ] add directory handling, as of now will error if a folder exists in the dldDir
+ - [ ] add compare files for changes and update appropriately. 
