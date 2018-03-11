@@ -1,15 +1,14 @@
 var dropboxSync = require("./dropbox-sync")
 var dBoxSync = dropboxSync.syncTheDbox
 
-
-dBoxSync()
-
+//dBoxSync()
 const imagesDir = "./images"
 
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
 const fs = require('fs')
+
 const app = express()
 app.use(morgan('tiny'))
 
@@ -25,7 +24,6 @@ app.use(express.static(path.join(__dirname, './app')))
 var imageList = []
 
 getImagesList()
-
 function getImagesList() {
   fs.readdir(imagesDir, (error, images) => {
 
@@ -33,19 +31,30 @@ function getImagesList() {
     images.forEach((image) => {
       if (image != 'thumbs') {
         imageList.push({
-          path: image,
-          title: "",
-          caption: ""
+          path: "/images/" + image,
+          thumb: "/images/thumbs/" + image,
+          title: path.parse(image).name
         })
       }
     })
   })
-  // populate imageList..
+  // populate imageList.. for api endpoint
   app.get('/api/images', (req, res) => {
+    //console.log(req.hostname);
     res.json(imageList)
   })
 }
 
+// create root directory responce
+app.get('/', (req, res) => {
+  res.json({message: "get the code here: https://github.com/jasenmichael/dropbox-node-sync"})
+})
+
+// create sync endpoint to run dBoxSync()
+app.get('/api/sync', (req, res) => {
+  dBoxSync()
+  res.json({message: "Dropbox has been synced!"})
+})
 
 // serve up the imagesDir,
 app.use('/images/', express.static('images'))
