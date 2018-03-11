@@ -1,6 +1,6 @@
 node_modules
-.config/**
-.config/index.js
+dropbox-sync/.config/**
+dropbox-sync/.config/index.js
 images/**
 
-!.config/example_index.js
+!dropbox-sync/.config/example_index.js
