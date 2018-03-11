@@ -37,6 +37,7 @@ function syncTheDbox() {
       newlist.forEach(file => {
         /// checks if the file exists locally in dldDir
         if (!fs.existsSync(dldDir + file.name)) {
+          //console.log(file.path);
           /// if it does not exist locally, download the file
           var fileDld = fs.createWriteStream(dldDir + file.name)
           var request = https.get(file.link, function(response) {
@@ -59,8 +60,9 @@ function syncTheDbox() {
 
       // deletes local files not in dboxFiles array
       fs.readdirSync(dldDir).forEach(file => {
-        if (dboxFiles.includes(file) == false) {
-          console.log(file + " not located on Dropbox", dldDir + "file" + " deleted")
+        if ((dboxFiles.includes(file) == false)  || (file === "thumbs")) {
+          //console.log(file);
+          console.log(file + " not located on Dropbox", dldDir + file + " deleted")
           fs.unlinkSync(dldDir + file)
         }
       })
