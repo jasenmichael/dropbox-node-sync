@@ -46,6 +46,7 @@ function getImagesList() {
   })
 }
 
+
 // serve up the imagesDir,
 app.use('/images/', express.static('images'))
 
