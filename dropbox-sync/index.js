@@ -13,7 +13,7 @@ var dbx = new Dropbox({
 })
 var DROPBOX_PATH = '' // dropbox app root dir
 
-
+var listInfo = []
 function syncTheDbox() {
   dbx.filesListFolder({
       path: DROPBOX_PATH
@@ -30,10 +30,12 @@ function syncTheDbox() {
     })
     .then(results => results.map(result => ({
       name: result.metadata.name,
-      link: result.link
+      link: result.link,
+      date_last_modified: result.metadata.client_modified
     })))
     .then(newlist => {
-      //console.log(newlist)
+      listInfo = newlist
+      //console.log(listInfo)
       newlist.forEach(file => {
         /// checks if the file exists locally in dldDir
         if (!fs.existsSync(dldDir + file.name)) {
@@ -60,17 +62,24 @@ function syncTheDbox() {
 
       // deletes local files not in dboxFiles array
       fs.readdirSync(dldDir).forEach(file => {
-        if ((dboxFiles.includes(file) == false)  || (file === "thumbs")) {
-          //console.log(file);
-          console.log(file + " not located on Dropbox", dldDir + file + " deleted")
+        if (file == "thumbs") {
+          // ignore thumbs
+        }
+        else if (dboxFiles.includes(file) == false) {
+          console.log(file);
           fs.unlinkSync(dldDir + file)
+          console.log(file + " not located on Dropbox, ", dldDir + file + " deleted")
         }
       })
     })
+    .then(() => {
+      //console.log(listInfo);
+      return listInfo
+    })
     .catch(console.log);
 }
-//syncTheDbox()
 
 module.exports = {
-  syncTheDbox
+  syncTheDbox,
+  listInfo
 }
