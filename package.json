@@ -1,0 +1,16 @@
+{
+  "name": "dropbox-node-sync",
+  "version": "1.0.0",
+  "description": "sync a dropbox directory to a node server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "author": "Jasen Michael",
+  "license": "GPL3",
+  "dependencies": {
+    "dropbox": "^4.0.1",
+    "isomorphic-fetch": "^2.2.1"
+  }
+}
