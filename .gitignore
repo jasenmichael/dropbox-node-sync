@@ -1,4 +1,4 @@
-deploy/**
+deploy
 node_modules
 dropbox-sync/.config/index.js
 images/**
